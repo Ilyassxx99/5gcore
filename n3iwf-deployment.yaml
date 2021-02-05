@@ -1,6 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: 5gcore
   name: n3iwf-deployment
   labels:
     nf: n3iwf

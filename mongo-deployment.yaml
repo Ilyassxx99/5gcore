@@ -49,6 +49,9 @@ metadata:
   namespace: 5gcore
   name: mongo-pv
 spec:
+  volumeMode: Filesystem
+  hostPath:
+    path: "/home/ilyass/mongo-pv"
   capacity:
     storage: 10Gi
   accessModes:

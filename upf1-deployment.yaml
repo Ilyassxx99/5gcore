@@ -31,4 +31,4 @@ spec:
       - name: upfcfg1-volume
         hostPath:
           # chemin du dossier sur l'hôte
-        path: ./config/upfcfg1.yaml
+          path: ./config/upfcfg1.yaml

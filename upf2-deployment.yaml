@@ -35,4 +35,4 @@ spec:
       - name: upfcfg2-volume
         hostPath:
           # chemin du dossier sur l'hôte
-        path: ./config/upfcfg2.yaml
+          path: ./config/upfcfg2.yaml

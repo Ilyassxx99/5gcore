@@ -43,3 +43,16 @@ spec:
         hostPath:
           # chemin du dossier sur l'hôte
           path: ./config/free5GC.conf
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: 5gcore
+  name: ausf-service
+spec:
+  selector:
+    nf: ausf
+  ports:
+    - protocol: TCP
+      port: 29509 # Port exposed to the cluster
+      targetPort: 29509 # Port on which the pod listens

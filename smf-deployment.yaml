@@ -44,8 +44,21 @@ spec:
       - name: smf5gc-volume
         hostPath:
           # chemin du dossier sur l'hôte
-        path: ./config/free5GC.conf
+          path: ./config/free5GC.conf
       - name: uerouting-volume
         hostPath:
           # chemin du dossier sur l'hôte
-        path: ./config/uerouting.yaml
+          path: ./config/uerouting.yaml
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: 5gcore
+  name: smf-service
+spec:
+  selector:
+    nf: smf
+  ports:
+    - protocol: TCP
+      port: 29502 # Port exposed to the cluster
+      targetPort: 29502 # Port on which the pod listens

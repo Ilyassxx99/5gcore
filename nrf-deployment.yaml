@@ -40,8 +40,21 @@ spec:
       - name: nrfcfg-volume
         hostPath:
           # chemin du dossier sur l'hôte
-        path: ./config/nrfcfg.conf
+          path: ./config/nrfcfg.conf
       - name: nrf5gc-volume
         hostPath:
           # chemin du dossier sur l'hôte
-        path: ./config/free5GC.conf
+          path: ./config/free5GC.conf
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: 5gcore
+  name: nrf-service
+spec:
+  selector:
+    nf: nrf
+  ports:
+    - protocol: TCP
+      port: 29510 # Port exposed to the cluster
+      targetPort: 29510 # Port on which the pod listens

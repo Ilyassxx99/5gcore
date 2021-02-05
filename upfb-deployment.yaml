@@ -35,4 +35,4 @@ spec:
       - name: upfcfgb-volume
         hostPath:
           # chemin du dossier sur l'hôte
-        path: ./config/upfcfgb.yaml
+          path: ./config/upfcfgb.yaml

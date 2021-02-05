@@ -40,7 +40,7 @@ spec:
       - name: smfcfg-volume
         hostPath:
           # chemin du dossier sur l'hôte
-        path: ./config/smfcfg.conf
+          path: ./config/smfcfg.conf
       - name: smf5gc-volume
         hostPath:
           # chemin du dossier sur l'hôte

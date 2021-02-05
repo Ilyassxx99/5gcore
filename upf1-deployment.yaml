@@ -15,6 +15,7 @@ spec:
       labels:
         nf: upf1
     spec:
+      hostname: upf1
       containers:
       - name: upf1
         image: ilyassifez/5gcore:upf-1

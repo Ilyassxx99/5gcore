@@ -15,6 +15,7 @@ spec:
       labels:
         nf: upf2
     spec:
+      hostname: upf2
       initContainers:
       - name: init-upf1-service
         image: busybox:1.28

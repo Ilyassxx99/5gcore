@@ -14,6 +14,7 @@ spec:
       labels:
         nf: n3iwf
     spec:
+      hostname: n3iwf
       initContainers:
       - name: init-amf-service
         image: busybox:1.28
@@ -46,12 +47,12 @@ spec:
       - name: n3iwfcfg-volume
         hostPath:
           # chemin du dossier sur l'hôte
-        path: ./config/n3iwfcfg.conf
+          path: ./config/n3iwfcfg.conf
       - name: n3iwf5gc-volume
         hostPath:
           # chemin du dossier sur l'hôte
-        path: ./config/free5GC.conf
+          path: ./config/free5GC.conf
       - name: n3iwf-ipsec-volume
         hostPath:
           # chemin du dossier sur l'hôte
-        path: ./config/n3iwf-ipsec.sh
+          path: ./config/n3iwf-ipsec.sh

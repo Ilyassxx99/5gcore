@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: 5gcore
+  name: upfb-deployment
+  labels:
+    nf: upfb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      nf: upfb
+  template:
+    metadata:
+      labels:
+        nf: upfb
+    spec:
+      initContainers:
+      - name: init-upfb-service
+        image: busybox:1.28
+        command: ['sh', '-c', "until nslookup upfb-service.5gcore.svc.cluster.local; do echo waiting for upfb; sleep 2; done"]
+      containers:
+      - name: upfb
+        image: ilyassifez/5gcore:upf-b
+        command: ["./free5gc-upfd"]
+        args: ["-f", "../config/upfcfg.yaml"]
+        securityContext:
+          capabilities:
+            add: ["NET_ADMIN"]
+        volumeMounts:
+        - mountPath: /free5gc/config/upfcfg.yaml
+          name: upfcfgb-volume
+      volumes:
+      - name: upfcfgb-volume
+        hostPath:
+          # chemin du dossier sur l'hôte
+        path: ./config/upfcfgb.yaml

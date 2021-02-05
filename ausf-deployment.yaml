@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: 5gcore
+  name: ausf-deployment
+  labels:
+    nf: ausf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      nf: ausf
+  template:
+    metadata:
+      labels:
+        nf: ausf
+    spec:
+      initContainers:
+      - name: init-nrf-service
+        image: busybox:1.28
+        command: ['sh', '-c', "until nslookup nrf-service.5gcore.svc.cluster.local; do echo waiting for nrf; sleep 2; done"]
+      containers:
+      - name: ausf
+        image: ilyassifez/5gcore:ausf
+        env:
+        - name: GIN_MODE
+          value: release
+        ports:
+        - containerPort: 29509
+        command: ["./ausf"]
+        args: ["-ausfcfg", "../config/ausfcfg.conf"]
+        volumeMounts:
+        - mountPath: /free5gc/config/ausfcfg.conf
+          name: ausfcfg-volume
+        - mountPath: /free5gc/config/free5GC.conf
+          name: ausf5gc-volume
+      volumes:
+      - name: ausfcfg-volume
+        hostPath:
+          # chemin du dossier sur l'hôte
+          path: ./config/ausfcfg.conf
+      - name: ausf5gc-volume
+        hostPath:
+          # chemin du dossier sur l'hôte
+          path: ./config/free5GC.conf

@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: 5gcore
+  name: upf1-deployment
+  labels:
+    nf: upf1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      nf: upf1
+  template:
+    metadata:
+      labels:
+        nf: upf1
+    spec:
+      containers:
+      - name: upf1
+        image: ilyassifez/5gcore:upf-1
+        command: ["./free5gc-upfd"]
+        args: ["-f", "../config/upfcfg.yaml"]
+        securityContext:
+          capabilities:
+            add: ["NET_ADMIN"]
+        volumeMounts:
+        - mountPath: /free5gc/config/upfcfg.yaml
+          name: upfcfg1-volume
+      volumes:
+      - name: upfcfg1-volume
+        hostPath:
+          # chemin du dossier sur l'hôte
+        path: ./config/upfcfg1.yaml

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: 5gcore
+  name: amf-service
+spec:
+  selector:
+    nf: amf
+  ports:
+    - protocol: TCP
+      port: 29518 # Port exposed to the cluster
+      targetPort: 29518 # Port on which the pod listens

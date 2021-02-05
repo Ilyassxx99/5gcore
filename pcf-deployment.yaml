@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: 5gcore
+  name: pcf-deployment
+  labels:
+    nf: pcf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      nf: pcf
+  template:
+    metadata:
+      labels:
+        nf: pcf
+    spec:
+      initContainers:
+      - name: init-nrf-service
+        image: busybox:1.28
+        command: ['sh', '-c', "until nslookup nrf-service.5gcore.svc.cluster.local; do echo waiting for nrf; sleep 2; done"]
+      containers:
+      - name: pcf
+        image: ilyassifez/5gcore:pcf
+        env:
+        - name: GIN_MODE
+          value: release
+        ports:
+        - containerPort: 29507
+        command: ["./pcf"]
+        args: ["-pcfcfg", "../config/pcfcfg.conf"]
+        volumeMounts:
+        - mountPath: /free5gc/config/pcfcfg.conf
+          name: pcfcfg-volume
+        - mountPath: /free5gc/config/free5GC.conf
+          name: pcf5gc-volume
+      volumes:
+      - name: pcfcfg-volume
+        hostPath:
+          # chemin du dossier sur l'hôte
+        path: ./config/pcfcfg.conf
+      - name: pcf5gc-volume
+        hostPath:
+          # chemin du dossier sur l'hôte
+        path: ./config/free5GC.conf

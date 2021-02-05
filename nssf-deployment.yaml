@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: 5gcore
+  name: nssf-deployment
+  labels:
+    nf: nssf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      nf: nssf
+  template:
+    metadata:
+      labels:
+        nf: nssf
+    spec:
+      initContainers:
+      - name: init-nrf-service
+        image: busybox:1.28
+        command: ['sh', '-c', "until nslookup nrf-service.5gcore.svc.cluster.local; do echo waiting for nrf; sleep 2; done"]
+      containers:
+      - name: nssf
+        image: ilyassifez/5gcore:nssf
+        env:
+        - name: GIN_MODE
+          value: release
+        ports:
+        - containerPort: 29531
+        command: ["./nssf"]
+        args: ["-nssfcfg", "../config/nssfcfg.conf"]
+        volumeMounts:
+        - mountPath: /free5gc/config/nssfcfg.conf
+          name: nssfcfg-volume
+        - mountPath: /free5gc/config/free5GC.conf
+          name: nssf5gc-volume
+      volumes:
+      - name: nssfcfg-volume
+        hostPath:
+          # chemin du dossier sur l'hôte
+        path: ./config/nssfcfg.conf
+      - name: nssf5gc-volume
+        hostPath:
+          # chemin du dossier sur l'hôte
+        path: ./config/free5GC.conf

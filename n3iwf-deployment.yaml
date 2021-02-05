@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: n3iwf-deployment
+  labels:
+    nf: n3iwf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      nf: n3iwf
+  template:
+    metadata:
+      labels:
+        nf: n3iwf
+    spec:
+      initContainers:
+      - name: init-amf-service
+        image: busybox:1.28
+        command: ['sh', '-c', "until nslookup amf-service.5gcore.svc.cluster.local; do echo waiting for amf; sleep 2; done"]
+      - name: init-upfb-service
+        image: busybox:1.28
+        command: ['sh', '-c', "until nslookup upfb-service.5gcore.svc.cluster.local; do echo waiting for upfb; sleep 2; done"]
+      - name: init-smf-service
+        image: busybox:1.28
+        command: ['sh', '-c', "until nslookup smf-service.5gcore.svc.cluster.local; do echo waiting for smf; sleep 2; done"]
+      containers:
+      - name: n3iwf
+        image: ilyassifez/5gcore:n3iwf
+        env:
+        - name: GIN_MODE
+          value: release
+        command: ["sh"]
+        args: ["-c", '"./n3iwf-ipsec.sh && ./n3iwf -n3iwfcfg ../config/n3iwfcfg.conf"']
+        securityContext:
+          capabilities:
+            add: ["NET_ADMIN"]
+        volumeMounts:
+        - mountPath: /free5gc/config/n3iwfcfg.conf
+          name: n3iwfcfg-volume
+        - mountPath: /free5gc/n3iwf/n3iwf-ipsec.sh
+          name: n3iwf-ipsec-volume
+        - mountPath: /free5gc/config/free5GC.conf
+          name: n3iwf5gc-volume
+      volumes:
+      - name: n3iwfcfg-volume
+        hostPath:
+          # chemin du dossier sur l'hôte
+        path: ./config/n3iwfcfg.conf
+      - name: n3iwf5gc-volume
+        hostPath:
+          # chemin du dossier sur l'hôte
+        path: ./config/free5GC.conf
+      - name: n3iwf-ipsec-volume
+        hostPath:
+          # chemin du dossier sur l'hôte
+        path: ./config/n3iwf-ipsec.sh

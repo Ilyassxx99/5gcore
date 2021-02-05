@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: 5gcore
+  name: udm-deployment
+  labels:
+    nf: udm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      nf: udm
+  template:
+    metadata:
+      labels:
+        nf: udm
+    spec:
+      initContainers:
+      - name: init-nrf-service
+        image: busybox:1.28
+        command: ['sh', '-c', "until nslookup nrf-service.5gcore.svc.cluster.local; do echo waiting for nrf; sleep 2; done"]
+      containers:
+      - name: udm
+        image: ilyassifez/5gcore:udm
+        env:
+        - name: GIN_MODE
+          value: release
+        ports:
+        - containerPort: 29503
+        command: ["./udm"]
+        args: ["-udmcfg", "../config/udmcfg.conf"]
+        volumeMounts:
+        - mountPath: /free5gc/config/udmcfg.conf
+          name: udmcfg-volume
+        - mountPath: /free5gc/config/free5GC.conf
+          name: udm5gc-volume
+      volumes:
+      - name: udmcfg-volume
+        hostPath:
+          # chemin du dossier sur l'hôte
+        path: ./config/udmcfg.conf
+      - name: udm5gc-volume
+        hostPath:
+          # chemin du dossier sur l'hôte
+        path: ./config/free5GC.conf

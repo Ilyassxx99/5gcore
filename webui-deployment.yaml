@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: 5gcore
+  name: webui-deployment
+  labels:
+    nf: webui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      nf: webui
+  template:
+    metadata:
+      labels:
+        nf: webui
+    spec:
+      initContainers:
+      - name: init-mongo-service
+        image: busybox:1.28
+        command: ['sh', '-c', "until nslookup mongo-service.5gcore.svc.cluster.local; do echo waiting for mongo; sleep 2; done"]
+      containers:
+      - name: webui
+        image: ilyassifez/5gcore:webui
+        env:
+        - name: GIN_MODE
+          value: release
+        ports:
+        - containerPort: 5000
+        command: ["./webui"]
+        volumeMounts:
+        - mountPath: /free5gc/config/webuicfg.conf
+          name: webuicfg-volume
+        - mountPath: /free5gc/config/free5GC.conf
+          name: webui5gc-volume
+      volumes:
+      - name: webuicfg-volume
+        hostPath:
+          # chemin du dossier sur l'hôte
+        path: ./config/webuicfg.conf
+      - name: webui5gc-volume
+        hostPath:
+          # chemin du dossier sur l'hôte
+        path: ./config/free5GC.conf

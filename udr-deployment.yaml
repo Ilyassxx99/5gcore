@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: 5gcore
+  name: udr-deployment
+  labels:
+    nf: udr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      nf: udr
+  template:
+    metadata:
+      labels:
+        nf: udr
+    spec:
+      initContainers:
+      - name: init-nrf-service
+        image: busybox:1.28
+        command: ['sh', '-c', "until nslookup nrf-service.5gcore.svc.cluster.local; do echo waiting for nrf; sleep 2; done"]
+      containers:
+      - name: udr
+        image: ilyassifez/5gcore:udr
+        env:
+        - name: GIN_MODE
+          value: release
+        ports:
+        - containerPort: 29504
+        command: ["./udr"]
+        args: ["-udrcfg", "../config/udrcfg.conf"]
+        volumeMounts:
+        - mountPath: /free5gc/config/udrcfg.conf
+          name: udrcfg-volume
+        - mountPath: /free5gc/config/free5GC.conf
+          name: udr5gc-volume
+      volumes:
+      - name: udrcfg-volume
+        hostPath:
+          # chemin du dossier sur l'hôte
+        path: ./config/udrcfg.conf
+      - name: udr5gc-volume
+        hostPath:
+          # chemin du dossier sur l'hôte
+        path: ./config/free5GC.conf

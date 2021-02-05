@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: 5gcore
+  name: nrf-deployment
+  labels:
+    nf: nrf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      nf: nrf
+  template:
+    metadata:
+      labels:
+        nf: nrf
+    spec:
+      initContainers:
+      - name: init-mongo-service
+        image: busybox:1.28
+        command: ['sh', '-c', "until nslookup mongo-service.5gcore.svc.cluster.local; do echo waiting for mongo; sleep 2; done"]
+      containers:
+      - name: nrf
+        image: ilyassifez/5gcore:nrf
+        env:
+        - name: DB_URI
+          value: mongodb://db/free5gc
+        - name: GIN_MODE
+          value: release
+        ports:
+        - containerPort: 29510
+        command: ["./nrf"]
+        args: ["-nrfcfg", "../config/nrfcfg.conf"]
+        volumeMounts:
+        - mountPath: /free5gc/config/nrfcfg.conf
+          name: nrfcfg-volume
+        - mountPath: /free5gc/config/free5GC.conf
+          name: nrf5gc-volume
+      volumes:
+      - name: nrfcfg-volume
+        hostPath:
+          # chemin du dossier sur l'hôte
+        path: ./config/nrfcfg.conf
+      - name: nrf5gc-volume
+        hostPath:
+          # chemin du dossier sur l'hôte
+        path: ./config/free5GC.conf

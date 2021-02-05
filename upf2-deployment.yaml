@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: 5gcore
+  name: upf2-deployment
+  labels:
+    nf: upf2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      nf: upf2
+  template:
+    metadata:
+      labels:
+        nf: upf2
+    spec:
+      initContainers:
+      - name: init-upf1-service
+        image: busybox:1.28
+        command: ['sh', '-c', "until nslookup upf1-service.5gcore.svc.cluster.local; do echo waiting for upf1; sleep 2; done"]
+      containers:
+      - name: upf2
+        image: ilyassifez/5gcore:upf-2
+        command: ["./free5gc-upfd"]
+        args: ["-f", "../config/upfcfg.yaml"]
+        securityContext:
+          capabilities:
+            add: ["NET_ADMIN"]
+        volumeMounts:
+        - mountPath: /free5gc/config/upfcfg.yaml
+          name: upfcfg2-volume
+      volumes:
+      - name: upfcfg2-volume
+        hostPath:
+          # chemin du dossier sur l'hôte
+        path: ./config/upfcfg2.yaml

@@ -37,11 +37,11 @@ spec:
       - name: webuicfg-volume
         hostPath:
           # chemin du dossier sur l'hôte
-          path: ./config/webuicfg.conf
+          path: /home/ilyass/5gcore/config/webuicfg.conf
       - name: webui5gc-volume
         hostPath:
           # chemin du dossier sur l'hôte
-          path: ./config/free5GC.conf
+          path: /home/ilyass/5gcore/config/free5GC.conf
 ---
 apiVersion: v1
 kind: Service

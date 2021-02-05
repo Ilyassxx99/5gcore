@@ -40,11 +40,11 @@ spec:
       - name: nrfcfg-volume
         hostPath:
           # chemin du dossier sur l'hôte
-          path: ./config/nrfcfg.conf
+          path: /home/ilyass/5gcore/config/nrfcfg.conf
       - name: nrf5gc-volume
         hostPath:
           # chemin du dossier sur l'hôte
-          path: ./config/free5GC.conf
+          path: /home/ilyass/5gcore/config/free5GC.conf
 ---
 apiVersion: v1
 kind: Service

@@ -38,11 +38,11 @@ spec:
       - name: udmcfg-volume
         hostPath:
           # chemin du dossier sur l'hôte
-          path: ./config/udmcfg.conf
+          path: /home/ilyass/5gcore/config/udmcfg.conf
       - name: udm5gc-volume
         hostPath:
           # chemin du dossier sur l'hôte
-          path: ./config/free5GC.conf
+          path: /home/ilyass/5gcore/config/free5GC.conf
 ---
 apiVersion: v1
 kind: Service

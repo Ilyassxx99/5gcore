@@ -48,12 +48,12 @@ spec:
       - name: n3iwfcfg-volume
         hostPath:
           # chemin du dossier sur l'hôte
-          path: ./config/n3iwfcfg.conf
+          path: /home/ilyass/5gcore/config/n3iwfcfg.conf
       - name: n3iwf5gc-volume
         hostPath:
           # chemin du dossier sur l'hôte
-          path: ./config/free5GC.conf
+          path: /home/ilyass/5gcore/config/free5GC.conf
       - name: n3iwf-ipsec-volume
         hostPath:
           # chemin du dossier sur l'hôte
-          path: ./config/n3iwf-ipsec.sh
+          path: /home/ilyass/5gcore/config/n3iwf-ipsec.sh

@@ -38,11 +38,11 @@ spec:
       - name: pcfcfg-volume
         hostPath:
           # chemin du dossier sur l'hôte
-          path: ./config/pcfcfg.conf
+          path: /home/ilyass/5gcore/config/pcfcfg.conf
       - name: pcf5gc-volume
         hostPath:
           # chemin du dossier sur l'hôte
-          path: ./config/free5GC.conf
+          path: /home/ilyass/5gcore/config/free5GC.conf
 ---
 apiVersion: v1
 kind: Service

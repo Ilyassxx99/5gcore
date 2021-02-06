@@ -54,6 +54,6 @@ spec:
   selector:
     nf: amf
   ports:
-    - protocol: UDP
+    - protocol: TCP
       port: 29518 # Port exposed to the cluster
       targetPort: 29518 # Port on which the pod listens

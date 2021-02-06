@@ -15,6 +15,7 @@ spec:
       labels:
         nf: nssf
     spec:
+      hostname: nssf
       initContainers:
       - name: init-nrf-service
         image: busybox:1.28
@@ -43,16 +44,16 @@ spec:
         hostPath:
           # chemin du dossier sur l'hôte
           path: /home/ilyass/5gcore/config/free5GC.conf
----
-apiVersion: v1
-kind: Service
-metadata:
-  namespace: 5gcore
-  name: nssf-service
-spec:
-  selector:
-    nf: nssf
-  ports:
-    - protocol: TCP
-      port: 29531 # Port exposed to the cluster
-      targetPort: 29531 # Port on which the pod listens
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   namespace: 5gcore
+#   name: nssf-service
+# spec:
+#   selector:
+#     nf: nssf
+#   ports:
+#     - protocol: TCP
+#       port: 29531 # Port exposed to the cluster
+#       targetPort: 29531 # Port on which the pod listens

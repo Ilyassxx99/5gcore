@@ -15,6 +15,7 @@ spec:
       labels:
         nf: nrf
     spec:
+      hostname: nrf
       initContainers:
       - name: init-mongo-service
         image: busybox:1.28
@@ -45,16 +46,16 @@ spec:
         hostPath:
           # chemin du dossier sur l'hôte
           path: /home/ilyass/5gcore/config/free5GC.conf
----
-apiVersion: v1
-kind: Service
-metadata:
-  namespace: 5gcore
-  name: nrf-service
-spec:
-  selector:
-    nf: nrf
-  ports:
-    - protocol: TCP
-      port: 29510 # Port exposed to the cluster
-      targetPort: 29510 # Port on which the pod listens
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   namespace: 5gcore
+#   name: nrf-service
+# spec:
+#   selector:
+#     nf: nrf
+#   ports:
+#     - protocol: TCP
+#       port: 29510 # Port exposed to the cluster
+#       targetPort: 29510 # Port on which the pod listens

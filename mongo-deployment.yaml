@@ -15,6 +15,7 @@ spec:
       labels:
         nf: mongo
     spec:
+      hostname: mongo
       containers:
       - name: mongo
         image: mongo

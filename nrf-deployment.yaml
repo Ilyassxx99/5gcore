@@ -19,7 +19,7 @@ spec:
       initContainers:
       - name: init-mongo-service
         image: busybox:1.28
-        command: ['sh', '-c', "until nslookup mongo.5gcore.svc.cluster.local; do echo waiting for mongo; sleep 2; done"]
+        command: ['sh', '-c', "until nslookup mongo-service.5gcore.svc.cluster.local; do echo waiting for mongo; sleep 2; done"]
       containers:
       - name: nrf
         image: ilyassifez/5gcore:nrf
@@ -46,16 +46,16 @@ spec:
         hostPath:
           # chemin du dossier sur l'hôte
           path: /home/ilyass/5gcore/config/free5GC.conf
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   namespace: 5gcore
-#   name: nrf-service
-# spec:
-#   selector:
-#     nf: nrf
-#   ports:
-#     - protocol: TCP
-#       port: 29510 # Port exposed to the cluster
-#       targetPort: 29510 # Port on which the pod listens
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: 5gcore
+  name: nrf-service
+spec:
+  selector:
+    nf: nrf
+  ports:
+    - protocol: TCP
+      port: 29510 # Port exposed to the cluster
+      targetPort: 29510 # Port on which the pod listens

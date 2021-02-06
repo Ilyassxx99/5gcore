@@ -17,9 +17,9 @@ spec:
     spec:
       hostname: upfb
       initContainers:
-      - name: init-upfb-service
+      - name: init-nrf-service
         image: busybox:1.28
-        command: ['sh', '-c', "until nslookup upfb.5gcore.svc.cluster.local; do echo waiting for upfb; sleep 2; done"]
+        command: ['sh', '-c', "until nslookup nrf-service.5gcore.svc.cluster.local; do echo waiting for nrf; sleep 2; done"]
       containers:
       - name: upfb
         image: ilyassifez/5gcore:upf-b

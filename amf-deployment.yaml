@@ -19,7 +19,7 @@ spec:
       initContainers:
       - name: init-nrf-service
         image: busybox:1.28
-        command: ['sh', '-c', "until nslookup nrf.5gcore.svc.cluster.local; do echo waiting for nrf; sleep 2; done"]
+        command: ['sh', '-c', "until nslookup nrf-service.5gcore.svc.cluster.local; do echo waiting for nrf; sleep 2; done"]
       containers:
       - name: amf
         image: ilyassifez/5gcore:amf
@@ -44,16 +44,16 @@ spec:
         hostPath:
           # chemin du dossier sur l'hôte
           path: /home/ilyass/5gcore/config/free5GC.conf
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   namespace: 5gcore
-#   name: amf-service
-# spec:
-#   selector:
-#     nf: amf
-#   ports:
-#     - protocol: TCP
-#       port: 29518 # Port exposed to the cluster
-#       targetPort: 29518 # Port on which the pod listens
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: 5gcore
+  name: amf-service
+spec:
+  selector:
+    nf: amf
+  ports:
+    - protocol: TCP
+      port: 29518 # Port exposed to the cluster
+      targetPort: 29518 # Port on which the pod listens

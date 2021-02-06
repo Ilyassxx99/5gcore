@@ -19,7 +19,7 @@ spec:
       initContainers:
       - name: init-nrf-service
         image: busybox:1.28
-        command: ['sh', '-c', "until nslookup nrf.5gcore.svc.cluster.local; do echo waiting for nrf; sleep 2; done"]
+        command: ['sh', '-c', "until nslookup nrf-service.5gcore.svc.cluster.local; do echo waiting for nrf; sleep 2; done"]
       containers:
       - name: pcf
         image: ilyassifez/5gcore:pcf
@@ -44,16 +44,16 @@ spec:
         hostPath:
           # chemin du dossier sur l'hôte
           path: /home/ilyass/5gcore/config/free5GC.conf
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   namespace: 5gcore
-#   name: pcf-service
-# spec:
-#   selector:
-#     nf: pcf
-#   ports:
-#     - protocol: TCP
-#       port: 29507 # Port exposed to the cluster
-#       targetPort: 29507 # Port on which the pod listens
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: 5gcore
+  name: pcf-service
+spec:
+  selector:
+    nf: pcf
+  ports:
+    - protocol: TCP
+      port: 29507 # Port exposed to the cluster
+      targetPort: 29507 # Port on which the pod listens

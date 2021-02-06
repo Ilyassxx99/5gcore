@@ -19,7 +19,7 @@ spec:
       initContainers:
       - name: init-nrf-service
         image: busybox:1.28
-        command: ['sh', '-c', "until nslookup nrf.5gcore.svc.cluster.local; do echo waiting for nrf; sleep 2; done"]
+        command: ['sh', '-c', "until nslookup nrf-service.5gcore.svc.cluster.local; do echo waiting for nrf; sleep 2; done"]
       containers:
       - name: udr
         image: ilyassifez/5gcore:udr
@@ -44,16 +44,16 @@ spec:
         hostPath:
           # chemin du dossier sur l'hôte
           path: /home/ilyass/5gcore/config/free5GC.conf
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   namespace: 5gcore
-#   name: udr-service
-# spec:
-#   selector:
-#     nf: udr
-#   ports:
-#     - protocol: TCP
-#       port: 29504 # Port exposed to the cluster
-#       targetPort: 29504 # Port on which the pod listens
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: 5gcore
+  name: udr-service
+spec:
+  selector:
+    nf: udr
+  ports:
+    - protocol: TCP
+      port: 29504 # Port exposed to the cluster
+      targetPort: 29504 # Port on which the pod listens

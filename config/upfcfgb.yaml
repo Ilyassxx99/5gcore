@@ -7,10 +7,10 @@ configuration:
   debugLevel: info
 
   pfcp:
-    - addr: upfb.5gcore.svc.cluster.local
+    - addr: upfb-service.5gcore.svc.cluster.local
 
   gtpu:
-    - addr: upfb.5gcore.svc.cluster.local
+    - addr: upfb-service.5gcore.svc.cluster.local
     # [optional] gtpu.name
     # - name: upf.5gc.nctu.me
     # [optional] gtpu.ifname

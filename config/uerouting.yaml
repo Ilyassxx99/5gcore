@@ -4,7 +4,7 @@ info:
 
 ueRoutingInfo:
   - SUPI: imsi-2089300000003
-    AN: upf1.5gcore.svc.cluster.local
+    AN: upf1-service.5gcore.svc.cluster.local
     PathList:
       - DestinationIP: 10.0.0.10
         DestinationPort: 8888
@@ -19,7 +19,7 @@ ueRoutingInfo:
           - AnchorUPF2
 
   - SUPI: imsi-2089300007486
-    AN: upf2.5gcore.svc.cluster.local
+    AN: upf2-service.5gcore.svc.cluster.local
     PathList:
       - DestinationIP: 10.0.0.10
         DestinationPort: 8888

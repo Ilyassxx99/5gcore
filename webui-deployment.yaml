@@ -18,7 +18,7 @@ spec:
       initContainers:
       - name: init-mongo-service
         image: busybox:1.28
-        command: ['sh', '-c', "until nslookup mongo.5gcore.svc.cluster.local; do echo waiting for mongo; sleep 2; done"]
+        command: ['sh', '-c', "until nslookup mongo-service.5gcore.svc.cluster.local; do echo waiting for mongo; sleep 2; done"]
       containers:
       - name: webui
         image: ilyassifez/5gcore:webui

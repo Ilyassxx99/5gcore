@@ -1,2 +1,2 @@
 #!/bin/bash
-sed -i 's/home/'$HOME'/' mongo-deployment.yaml
+sed -i 's/myhome/'$HOME'/' mongo-deployment.yaml

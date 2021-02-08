@@ -17,9 +17,10 @@ This repository is a Kubernetes version of [free5GC](https://github.com/free5gc/
 
 ## Prerequisites
 ### Environment
-free5gc has been tested against the following environment:
+free5gc should be tested against the following environment:
 
 - Software
+
   - OS: Ubuntu 18.04
   - gcc 7.3.0
   - Go 1.14.4 linux/amd64
@@ -28,16 +29,18 @@ free5gc has been tested against the following environment:
 
 - Minimum Hardware
 
-CPU: Intel i5 processor
-RAM: 4GB
-Hard drive: 160GB
-NIC: Any 1Gbps Ethernet card supported in the Linux kernel
-Recommended Hardware
+  - CPU: Intel i5 processor
+  - RAM: 4GB
+  - Hard drive: 160GB
+  - NIC: Any 1Gbps Ethernet card supported in the Linux kernel
+  
+- Recommended Hardware
 
-CPU: Intel i7 processor
-RAM: 8GB
-Hard drive: 160GB
-NIC: Any 10Gbps Ethernet card supported in the Linux kernel
+  - CPU: Intel i7 processor
+  - RAM: 8GB
+  - Hard drive: 160GB
+  - NIC: Any 10Gbps Ethernet card supported in the Linux kernel
+  
 ### GTP5G kernel module
 
 Due to the UPF issue, the host must using kernel `5.0.0-23-generic`. And it should contain `gtp5g` kernel module.

@@ -20,11 +20,11 @@ spec:
       - name: "wait-for-services"
         image: stevenaldinger/docker-k8s-wait-for-it
         imagePullPolicy: Always
-      env:
-      - name: WAIT_FOR_IT
-        value: "true"
-      - name: WAIT_FOR_PODS
-        value: "mongo-service.5gcore"
+        env:
+        - name: WAIT_FOR_IT
+          value: "true"
+        - name: WAIT_FOR_PODS
+          value: "mongo-service.5gcore"
       containers:
       - name: nrf
         image: ilyassifez/5gcore:nrf

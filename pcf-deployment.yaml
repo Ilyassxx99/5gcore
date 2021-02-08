@@ -58,4 +58,5 @@ spec:
     nf: pcf
   ports:
     - port: 29507 # Port exposed to the cluster
+      protocol: TCP
       targetPort: 29507 # Port on which the pod listens

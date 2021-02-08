@@ -56,5 +56,5 @@ spec:
   # clusterIP: 10.100.244.18
   ports:
     - port: 29518 # Port exposed to the cluster
-      protocol : SCTP
+      protocol : TCP
       targetPort: 29518 # Port on which the pod listens

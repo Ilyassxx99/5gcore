@@ -66,5 +66,5 @@ spec:
     nf: nrf
   ports:
     - port: 29510 # Port exposed to the cluster
-      protocol: SCTP
+      protocol: TCP
       targetPort: 29510 # Port on which the pod listens

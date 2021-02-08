@@ -59,8 +59,8 @@ sudo hostnamectl set-hostname master-node && \
 ## Start Free5gc
 
 ```bash
-$ git clone https://github.com/Ilyassxx99/5gcore.git
-$ kubectl apply -f 5gcore
-$ kubectl get pods --namespace 5gcore
+git clone https://github.com/Ilyassxx99/5gcore.git
+kubectl apply -f 5gcore
+kubectl get pods --namespace 5gcore
 ```
 

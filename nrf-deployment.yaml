@@ -66,6 +66,6 @@ spec:
     nf: nrf
   clusterIP: 10.100.244.10
   ports:
-    - protocol: UDP
+    - protocol: TCP
       port: 29510 # Port exposed to the cluster
       targetPort: 29510 # Port on which the pod listens

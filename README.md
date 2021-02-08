@@ -19,14 +19,14 @@ This repository is a Kubernetes version of [free5GC](https://github.com/free5gc/
 ### Environment
 free5gc has been tested against the following environment:
 
-* Software
-** OS: Ubuntu 18.04
-** gcc 7.3.0
-** Go 1.14.4 linux/amd64
-** kernel version 5.0.0-23-generic
-** The listed kernel version is required for the UPF element.
+- Software
+  - OS: Ubuntu 18.04
+  - gcc 7.3.0
+  - Go 1.14.4 linux/amd64
+  - kernel version 5.0.0-23-generic
+  - The listed kernel version is required for the UPF element.
 
-Minimum Hardware
+- Minimum Hardware
 
 CPU: Intel i5 processor
 RAM: 4GB

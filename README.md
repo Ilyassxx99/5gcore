@@ -10,7 +10,7 @@ This repository is a Kubernetes version of [free5GC](https://github.com/free5gc/
 - [Prerequisites](#prerequisites)
   - [GTP5G kernel module](#gtp5g-kernel-module)
   - [Docker engine](#docker-engine)
-  - [Kubernetes](#docker-compose)
+  - [Kubernetes](#Kubernetes)
 - [Start Free5gc](#start-free5gc)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -39,9 +39,14 @@ You also need to Setup Kubernetes as detailed here: https://kubernetes.io/docs/s
 
 ## Start Free5gc
 
-
 ```bash
 $ git clone https://github.com/Ilyassxx99/5gcore.git
 $ kubectl apply -f 5gcore
 $ kubectl get pods --namespace 5gcore
+```
+## Connect to WebConsole
+
+```bash
+Username: admin
+Password: free5gc
 ```

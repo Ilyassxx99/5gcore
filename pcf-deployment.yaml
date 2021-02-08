@@ -19,7 +19,7 @@ spec:
       initContainers:
       - name: init-nrf-service
         image: busybox:1.28
-        command: ['sh', '-c', "until nslookup nrf-service.5gcore.svc.cluster.local; do echo waiting for nrf; sleep 2; done"]
+        command: ['sh', '-c', "until curl http://nrf-service.5gcore.svc.cluster.local:29510; do echo waiting for nrf; sleep 2; done"]
       - name: init-amf-service
         image: busybox:1.28
         command: ['sh', '-c', "until nslookup amf-service.5gcore.svc.cluster.local; do echo waiting for nrf; sleep 2; done"]

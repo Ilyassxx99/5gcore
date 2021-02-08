@@ -53,7 +53,7 @@ metadata:
 spec:
   volumeMode: Filesystem
   hostPath:
-    path: "$HOME/mongo-pv"
+    path: "myhome/mongo-pv"
   capacity:
     storage: 10Gi
   accessModes:

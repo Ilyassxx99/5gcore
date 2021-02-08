@@ -35,7 +35,26 @@ To install docker on your favorite OS, you can follow instruction here: https://
 
 ### Kubernetes
 
-You also need to Setup Kubernetes as detailed here: https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
+You also need to Setup Kubernetes as detailed here: 
+```bash
+sudo apt-get update && sudo apt-get install -y apt-transport-https curl
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+cat <<EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
+deb https://apt.kubernetes.io/ kubernetes-xenial main
+EOF
+sudo apt-get update
+sudo apt-get install -y kubelet kubeadm kubectl
+sudo apt-mark hold kubelet kubeadm kubectl
+sudo swapoff -a
+sudo hostnamectl set-hostname master-node && \
+             sudo service docker start && \
+             sudo sysctl net.bridge.bridge-nf-call-iptables=1 && \
+             sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --service-cidr=10.244.100.0/24 && \
+             mkdir -p ~/.kube && \
+             sudo cp -i /etc/kubernetes/admin.conf ~/.kube/config && \
+             sudo chown $(id -u):$(id -g) ~/.kube/config && \
+             sudo kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+```
 
 ## Start Free5gc
 

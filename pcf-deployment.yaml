@@ -18,11 +18,11 @@ spec:
       hostname: pcf
       initContainers:
       - name: init-nrf-service
-        image: busybox:1.28
-        command: ['sh', '-c', "until curl http://nrf-service.5gcore.svc.cluster.local:29510; do echo waiting for nrf; sleep 2; done"]
+        image: curlimages/curl:latest
+        command: ['sh', '-c', "until curl http://nrf-service.5gcore.svc.cluster.local:29510; do echo waiting for NRF; sleep 2; done"]
       - name: init-amf-service
-        image: busybox:1.28
-        command: ['sh', '-c', "until nslookup amf-service.5gcore.svc.cluster.local; do echo waiting for nrf; sleep 2; done"]
+        image: curlimages/curl:latest
+        command: ['sh', '-c', "until curl http://amf-service.5gcore.svc.cluster.local:29518; do echo waiting for AMF; sleep 2; done"]
       containers:
       - name: pcf
         image: ilyassifez/5gcore:pcf

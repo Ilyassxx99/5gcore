@@ -94,6 +94,8 @@ sudo hostnamectl set-hostname master-node && \
 
 ```bash
 git clone https://github.com/Ilyassxx99/5gcore.git
+chmod +x 5gcore/pv.sh
+./pv.sh
 kubectl taint nodes master-node node-role.kubernetes.io/master:NoSchedule-
 kubectl config set-context kubernetes-admin@kubernetes --namespace 5gcore
 kubectl apply -f 5gcore

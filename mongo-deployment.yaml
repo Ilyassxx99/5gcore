@@ -22,7 +22,8 @@ spec:
         ports:
         - containerPort: 27017
         command: ["mongod"]
-        args: ["--bind_ip","mongo-service.5gcore.svc.cluster.local","--port", "27017"]
+        # "--bind_ip","mongo-service.5gcore.svc.cluster.local",
+        args: ["--port", "27017"]
         volumeMounts:
         - mountPath: /data/db
           name: dbdata

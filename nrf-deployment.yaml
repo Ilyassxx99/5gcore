@@ -64,7 +64,6 @@ metadata:
 spec:
   selector:
     nf: nrf
-  clusterIP: None
   ports:
     - port: 29510 # Port exposed to the cluster
       targetPort: 29510 # Port on which the pod listens

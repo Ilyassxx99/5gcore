@@ -20,6 +20,9 @@ spec:
       - name: init-nrf-service
         image: busybox:1.28
         command: ['sh', '-c', "until nslookup nrf-service.5gcore.svc.cluster.local; do echo waiting for nrf; sleep 2; done"]
+      - name: init-amf-service
+        image: busybox:1.28
+        command: ['sh', '-c', "until nslookup amf-service.5gcore.svc.cluster.local; do echo waiting for nrf; sleep 2; done"]
       containers:
       - name: pcf
         image: ilyassifez/5gcore:pcf
@@ -54,6 +57,5 @@ spec:
   selector:
     nf: pcf
   ports:
-    - protocol: TCP
-      port: 29507 # Port exposed to the cluster
+    - port: 29507 # Port exposed to the cluster
       targetPort: 29507 # Port on which the pod listens

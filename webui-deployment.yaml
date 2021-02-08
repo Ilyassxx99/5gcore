@@ -55,5 +55,5 @@ spec:
   ports:
     - protocol: TCP
       name: http
-      port: 5000 # Port exposed to the cluster
+      port: 32080 # Port exposed to the cluster
       targetPort: 5000 # Port on which the pod listens

@@ -33,7 +33,7 @@ spec:
         - name: GIN_MODE
           value: release
         command: ["sh"]
-        args: ["-c", '"./n3iwf-ipsec.sh && ./n3iwf -n3iwfcfg ../config/n3iwfcfg.conf"']
+        args: ["-c", '"./n3iwf-ipsec.sh && ./n3iwf -n3iwfcfg ./n3iwfcfg.conf"']
         securityContext:
           capabilities:
             add: ["NET_ADMIN"]

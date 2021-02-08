@@ -64,7 +64,7 @@ metadata:
 spec:
   selector:
     nf: nrf
-  clusterIP: 10.100.244.10
+  # clusterIP: 10.100.244.10
   ports:
     - protocol: TCP
       port: 29510 # Port exposed to the cluster

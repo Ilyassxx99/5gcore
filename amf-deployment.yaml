@@ -55,6 +55,5 @@ spec:
     nf: amf
   # clusterIP: 10.100.244.18
   ports:
-    - protocol: TCP
-      port: 29518 # Port exposed to the cluster
+    - port: 29518 # Port exposed to the cluster
       targetPort: 29518 # Port on which the pod listens

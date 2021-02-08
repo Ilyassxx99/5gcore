@@ -17,9 +17,14 @@ spec:
     spec:
       hostname: nrf
       initContainers:
-      - name: init-mongo-service
-        image: busybox:1.28
-        command: ['sh', '-c', "until nslookup mongo-service.5gcore.svc.cluster.local; do echo waiting for mongo; sleep 2; done"]
+      - name: "wait-for-services"
+        image: stevenaldinger/docker-k8s-wait-for-it
+        imagePullPolicy: Always
+      env:
+      - name: WAIT_FOR_IT
+        value: "true"
+      - name: WAIT_FOR_PODS
+        value: "mongo-service.5gcore"
       containers:
       - name: nrf
         image: ilyassifez/5gcore:nrf

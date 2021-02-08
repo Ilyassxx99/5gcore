@@ -44,9 +44,4 @@ $ git clone https://github.com/Ilyassxx99/5gcore.git
 $ kubectl apply -f 5gcore
 $ kubectl get pods --namespace 5gcore
 ```
-## Connect to WebConsole
 
-```bash
-Username: admin
-Password: free5gc
-```

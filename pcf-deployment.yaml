@@ -54,6 +54,7 @@ metadata:
   namespace: 5gcore
   name: pcf-service
 spec:
+  clusterIP: 10.100.244.7
   selector:
     nf: pcf
   ports:

@@ -51,6 +51,7 @@ metadata:
   namespace: 5gcore
   name: ausf-service
 spec:
+  clusterIP: 10.100.244.9
   selector:
     nf: ausf
   ports:

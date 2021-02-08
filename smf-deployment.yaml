@@ -59,7 +59,7 @@ metadata:
 spec:
   selector:
     nf: smf
-  # clusterIP: 10.100.244.2
+  clusterIP: 10.100.244.2
   ports:
     - protocol: TCP
       port: 29502 # Port exposed to the cluster

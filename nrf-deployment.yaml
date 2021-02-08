@@ -62,6 +62,7 @@ metadata:
   namespace: 5gcore
   name: nrf-service
 spec:
+  clusterIP: 10.100.244.10
   selector:
     nf: nrf
   ports:

@@ -61,6 +61,6 @@ spec:
     nf: smf
   clusterIP: 10.100.244.2
   ports:
-    - protocol: UDP
+    - protocol: TCP
       port: 29502 # Port exposed to the cluster
       targetPort: 29502 # Port on which the pod listens

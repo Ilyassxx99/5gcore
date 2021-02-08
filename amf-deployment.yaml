@@ -53,7 +53,7 @@ metadata:
 spec:
   selector:
     nf: amf
-  clusterIP: 10.100.244.2
+  clusterIP: 10.100.244.18
   ports:
     - protocol: TCP
       port: 29518 # Port exposed to the cluster

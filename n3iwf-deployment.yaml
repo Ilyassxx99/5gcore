@@ -20,9 +20,9 @@ spec:
       - name: init-amf-service
         image: busybox:1.28
         command: ['sh', '-c', "until nslookup amf-service.5gcore.svc.cluster.local; do echo waiting for amf; sleep 2; done"]
-      - name: init-upfb-service
-        image: busybox:1.28
-        command: ['sh', '-c', "until nslookup upfb-service.5gcore.svc.cluster.local; do echo waiting for upfb; sleep 2; done"]
+      # - name: init-upfb-service
+      #   image: busybox:1.28
+      #   command: ['sh', '-c', "until nslookup upfb-service.5gcore.svc.cluster.local; do echo waiting for upfb; sleep 2; done"]
       - name: init-smf-service
         image: busybox:1.28
         command: ['sh', '-c', "until nslookup smf-service.5gcore.svc.cluster.local; do echo waiting for smf; sleep 2; done"]

@@ -49,9 +49,11 @@ metadata:
   namespace: 5gcore
   name: webui-service
 spec:
+  type: NodePort
   selector:
     nf: webui
   ports:
     - protocol: TCP
+      name: http
       port: 5000 # Port exposed to the cluster
       targetPort: 5000 # Port on which the pod listens

@@ -31,14 +31,14 @@ free5gc should be tested against the following environment:
 
   - CPU: Intel i5 processor
   - RAM: 4GB
-  - Hard drive: 160GB
+  - Hard drive: 80GB
   - NIC: Any 1Gbps Ethernet card supported in the Linux kernel
   
 - Recommended Hardware
 
   - CPU: Intel i7 processor
   - RAM: 8GB
-  - Hard drive: 160GB
+  - Hard drive: 80GB
   - NIC: Any 10Gbps Ethernet card supported in the Linux kernel
   
 ### GTP5G kernel module

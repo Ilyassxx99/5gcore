@@ -1,4 +1,4 @@
-# Free5GC Compose
+# Free5GC Kubernetes
 
 This repository is a Kubernetes version of [free5GC](https://github.com/free5gc/free5gc) for stage 3. It's inspired by [free5gc-docker-compose](https://github.com/free5gc/free5gc-compose.git).
 
@@ -16,7 +16,28 @@ This repository is a Kubernetes version of [free5GC](https://github.com/free5gc/
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Prerequisites
+### Environment
+free5gc has been tested against the following environment:
 
+* Software
+** OS: Ubuntu 18.04
+** gcc 7.3.0
+** Go 1.14.4 linux/amd64
+** kernel version 5.0.0-23-generic
+** The listed kernel version is required for the UPF element.
+
+Minimum Hardware
+
+CPU: Intel i5 processor
+RAM: 4GB
+Hard drive: 160GB
+NIC: Any 1Gbps Ethernet card supported in the Linux kernel
+Recommended Hardware
+
+CPU: Intel i7 processor
+RAM: 8GB
+Hard drive: 160GB
+NIC: Any 10Gbps Ethernet card supported in the Linux kernel
 ### GTP5G kernel module
 
 Due to the UPF issue, the host must using kernel `5.0.0-23-generic`. And it should contain `gtp5g` kernel module.
@@ -31,7 +52,17 @@ sudo make install
 
 ### Docker engine
 
-To install docker on your favorite OS, you can follow instruction here: https://docs.docker.com/engine/install/
+To install docker on your favorite OS, you can follow instruction here:
+```bash
+sudo apt-get update && sudo apt-get install -y apt-transport-https curl
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+cat <<EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
+deb https://apt.kubernetes.io/ kubernetes-xenial main
+EOF
+sudo apt-get update
+sudo apt-get install -y kubelet kubeadm kubectl
+sudo apt-mark hold kubelet kubeadm kubectl
+```
 
 ### Kubernetes
 

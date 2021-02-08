@@ -1,2 +1,2 @@
 #!/bin/bash
-sed -i 's/myhome/'$HOME'/' 5gcore/mongo-deployment.yaml
+sed -i "s/myhome/$HOME/" 5gcore/mongo-deployment.yaml

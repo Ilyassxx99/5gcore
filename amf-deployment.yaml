@@ -19,7 +19,7 @@ spec:
       initContainers:
       - name: init-nrf-service
         image: busybox:1.28
-        command: ['sh', '-c', "until curl http://nrf-service.5gcore.svc.cluster.local:29510; do echo waiting for mongo; sleep 2; done"]
+        command: ['sh', '-c', "until curl http://10.244.100.12:29510; do echo waiting for NRF; sleep 2; done"]
       containers:
       - name: amf
         image: ilyassifez/5gcore:amf

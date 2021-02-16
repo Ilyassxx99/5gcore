@@ -4,16 +4,16 @@ metadata:
   namespace: 5gcore
   name: udr-deployment
   labels:
-    nf: udr
+    app: udr
 spec:
   replicas: 1
   selector:
     matchLabels:
-      nf: udr
+      app: udr
   template:
     metadata:
       labels:
-        nf: udr
+        app: udr
     spec:
       hostname: udr
       initContainers:
@@ -56,7 +56,7 @@ metadata:
 spec:
   clusterIP: 10.244.100.4
   selector:
-    nf: udr
+    app: udr
   ports:
     - protocol: TCP
       port: 29504 # Port exposed to the cluster

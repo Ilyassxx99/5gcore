@@ -4,16 +4,16 @@ metadata:
   namespace: 5gcore
   name: upfb-deployment
   labels:
-    nf: upfb
+    app: upfb
 spec:
   replicas: 1
   selector:
     matchLabels:
-      nf: upfb
+      app: upfb
   template:
     metadata:
       labels:
-        nf: upfb
+        app: upfb
     spec:
       hostname: upfb
       initContainers:

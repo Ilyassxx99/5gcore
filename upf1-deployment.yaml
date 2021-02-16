@@ -4,16 +4,16 @@ metadata:
   namespace: 5gcore
   name: upf1-deployment
   labels:
-    nf: upf1
+    app: upf1
 spec:
   replicas: 1
   selector:
     matchLabels:
-      nf: upf1
+      app: upf1
   template:
     metadata:
       labels:
-        nf: upf1
+        app: upf1
     spec:
       hostname: upf1
       initContainers:

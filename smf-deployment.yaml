@@ -4,16 +4,16 @@ metadata:
   namespace: 5gcore
   name: smf-deployment
   labels:
-    nf: smf
+    app: smf
 spec:
   replicas: 1
   selector:
     matchLabels:
-      nf: smf
+      app: smf
   template:
     metadata:
       labels:
-        nf: smf
+        app: smf
     spec:
       hostname: smf
       initContainers:
@@ -61,7 +61,7 @@ metadata:
   name: smf-service
 spec:
   selector:
-    nf: smf
+    app: smf
   clusterIP: 10.244.100.2
   ports:
     - protocol: TCP

@@ -4,16 +4,16 @@ metadata:
   namespace: 5gcore
   name: nrf-deployment
   labels:
-    nf: nrf
+    app: nrf
 spec:
   replicas: 1
   selector:
     matchLabels:
-      nf: nrf
+      app: nrf
   template:
     metadata:
       labels:
-        nf: nrf
+        app: nrf
     spec:
       hostname: nrf
       initContainers:
@@ -58,7 +58,7 @@ metadata:
 spec:
   clusterIP: 10.244.100.12
   selector:
-    nf: nrf
+    app: nrf
   ports:
     - port: 29510 # Port exposed to the cluster
       protocol: TCP

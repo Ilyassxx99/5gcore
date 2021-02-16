@@ -4,16 +4,16 @@ metadata:
   namespace: 5gcore
   name: pcf-deployment
   labels:
-    nf: pcf
+    app: pcf
 spec:
   replicas: 1
   selector:
     matchLabels:
-      nf: pcf
+      app: pcf
   template:
     metadata:
       labels:
-        nf: pcf
+        app: pcf
     spec:
       hostname: pcf
       initContainers:
@@ -59,7 +59,7 @@ metadata:
 spec:
   clusterIP: 10.244.100.7
   selector:
-    nf: pcf
+    app: pcf
   ports:
     - port: 29507 # Port exposed to the cluster
       protocol: TCP

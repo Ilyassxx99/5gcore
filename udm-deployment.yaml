@@ -22,6 +22,9 @@ spec:
         command: ['sh', '-c', "until curl http://nrf-service.5gcore.svc.cluster.local:29510; do echo waiting for NRF; sleep 2; done"]
       containers:
       - name: udm
+        securityContext:
+          capabilities:
+            add: ["NET_ADMIN","NET_RAW"]
         image: ilyassifez/5gcore:udm
         env:
         - name: GIN_MODE

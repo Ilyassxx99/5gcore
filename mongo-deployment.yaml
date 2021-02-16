@@ -19,10 +19,12 @@ spec:
       containers:
       - name: mongo
         image: mongo
+        securityContext:
+          capabilities:
+            add: ["NET_ADMIN","NET_RAW"]
         ports:
         - containerPort: 27017
         command: ["mongod"]
-        # "--bind_ip","mongo-service.5gcore.svc.cluster.local",
         args: ["--bind_ip_all","--port", "27017"]
         volumeMounts:
         - mountPath: /data/db

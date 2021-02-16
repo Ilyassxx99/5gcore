@@ -26,6 +26,9 @@ spec:
       containers:
       - name: pcf
         image: ilyassifez/5gcore:pcf
+        securityContext:
+          capabilities:
+            add: ["NET_ADMIN","NET_RAW"]
         env:
         - name: GIN_MODE
           value: release

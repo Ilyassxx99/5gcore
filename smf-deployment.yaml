@@ -23,6 +23,9 @@ spec:
       containers:
       - name: smf
         image: ilyassifez/5gcore:smf
+        securityContext:
+          capabilities:
+            add: ["NET_ADMIN","NET_RAW"]
         env:
         - name: GIN_MODE
           value: release

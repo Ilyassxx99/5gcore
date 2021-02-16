@@ -16,15 +16,6 @@ spec:
         nf: nrf
     spec:
       hostname: nrf
-      # initContainers:
-      # - name: "wait-for-services"
-      #   image: stevenaldinger/docker-k8s-wait-for-it
-      #   imagePullPolicy: Always
-      #   env:
-      #   - name: WAIT_FOR_IT
-      #     value: "true"
-      #   - name: WAIT_FOR_PODS
-      #     value: "mongo-service.5gcore"
       initContainers:
       - name: init-mongo-service
         image: busybox:1.28
@@ -32,6 +23,9 @@ spec:
       containers:
       - name: nrf
         image: ilyassifez/5gcore:nrf
+        securityContext:
+          capabilities:
+            add: ["NET_ADMIN","NET_RAW"]
         env:
         - name: DB_URI
           value: mongodb://db/free5gc

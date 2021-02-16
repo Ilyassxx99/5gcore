@@ -23,6 +23,9 @@ spec:
       containers:
       - name: nssf
         image: ilyassifez/5gcore:nssf
+        securityContext:
+          capabilities:
+            add: ["NET_ADMIN","NET_RAW"]
         env:
         - name: GIN_MODE
           value: release

@@ -15,7 +15,6 @@ spec:
       labels:
         nf: amf
     spec:
-      hostname: amf
       initContainers:
       - name: init-nrf-service
         image: curlimages/curl:latest
@@ -23,6 +22,9 @@ spec:
       containers:
       - name: amf
         image: ilyassifez/5gcore:amf
+        securityContext:
+          capabilities:
+            add: ["NET_ADMIN","NET_RAW"]
         env:
         - name: GIN_MODE
           value: release

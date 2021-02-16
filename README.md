@@ -90,6 +90,14 @@ sudo hostnamectl set-hostname master-node && \
              sudo kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 ```
 
+### Helm
+
+You also need to install Helm as detailed here: 
+```bash
+wget -c https://get.helm.sh/helm-v3.5.2-linux-amd64.tar.gz
+tar -xvzf helm-v3.5.2-linux-amd64.tar.gz
+sudo mv linux-amd64/helm /usr/local/bin/helm
+```
 ## Start Free5gc
 
 ```bash

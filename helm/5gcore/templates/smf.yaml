@@ -45,9 +45,6 @@ metadata:
   name: {{ .Values.smf.service.name }}
   namespace: {{ .Values.namespace}}
 spec:
-  {{- if eq .Values.smf.service.type "ClusterIP" }}
-  clusterIP: {{ .Values.smf.service.clusterIP }}
-  {{- end }}
   type: {{ .Values.smf.service.type }}
   ports:
     - port: {{ .Values.smf.service.port }}

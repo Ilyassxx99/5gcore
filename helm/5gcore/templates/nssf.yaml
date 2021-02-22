@@ -45,9 +45,6 @@ metadata:
   name: {{ .Values.nssf.service.name }}
   namespace: {{ .Values.namespace}}
 spec:
-  {{- if eq .Values.nssf.service.type "ClusterIP" }}
-  clusterIP: {{ .Values.nssf.service.clusterIP }}
-  {{- end }}
   type: {{ .Values.nssf.service.type }}
   ports:
     - port: {{ .Values.nssf.service.port }}

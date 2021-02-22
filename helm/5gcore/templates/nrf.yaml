@@ -45,9 +45,6 @@ metadata:
   name: {{ .Values.nrf.service.name }}
   namespace: {{ .Values.namespace}}
 spec:
-  {{- if eq .Values.nrf.service.type "ClusterIP" }}
-  clusterIP: {{ .Values.nrf.service.clusterIP }}
-  {{- end }}
   type: {{ .Values.nrf.service.type }}
   ports:
     - port: {{ .Values.nrf.service.port }}

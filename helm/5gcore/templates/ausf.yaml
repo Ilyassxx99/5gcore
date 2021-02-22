@@ -45,9 +45,6 @@ metadata:
   name: {{ .Values.ausf.service.name }}
   namespace: {{ .Values.namespace}}
 spec:
-  {{- if eq .Values.ausf.service.type "ClusterIP" }}
-  clusterIP: {{ .Values.ausf.service.clusterIP }}
-  {{- end }}
   type: {{ .Values.ausf.service.type }}
   ports:
     - port: {{ .Values.ausf.service.port }}

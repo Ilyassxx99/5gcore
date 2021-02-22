@@ -45,9 +45,6 @@ metadata:
   name: {{ .Values.amf.service.name }}
   namespace: {{ .Values.namespace}}
 spec:
-  {{- if eq .Values.amf.service.type "ClusterIP" }}
-  clusterIP: {{ .Values.amf.service.clusterIP }}
-  {{- end }}
   type: {{ .Values.amf.service.type }}
   ports:
     - port: {{ .Values.amf.service.port }}

@@ -45,9 +45,6 @@ metadata:
   name: {{ .Values.udr.service.name }}
   namespace: {{ .Values.namespace}}
 spec:
-  {{- if eq .Values.udr.service.type "ClusterIP" }}
-  clusterIP: {{ .Values.udr.service.clusterIP }}
-  {{- end }}
   type: {{ .Values.udr.service.type }}
   ports:
     - port: {{ .Values.udr.service.port }}

@@ -45,9 +45,6 @@ metadata:
   name: {{ .Values.pcf.service.name }}
   namespace: {{ .Values.namespace}}
 spec:
-  {{- if eq .Values.pcf.service.type "ClusterIP" }}
-  clusterIP: {{ .Values.pcf.service.clusterIP }}
-  {{- end }}
   type: {{ .Values.pcf.service.type }}
   ports:
     - port: {{ .Values.pcf.service.port }}

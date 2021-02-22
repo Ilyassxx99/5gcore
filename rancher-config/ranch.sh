@@ -15,7 +15,7 @@ helm install \
 certpodname=$(kubectl get pods -n cert-manager -o jsonpath='{.items[1].metadata.name}')
 kubectl wait pod/$certpodname -n cert-manager --for=condition=Ready
 kubectl get pods -n cert-manager
-helm upgrade --namespace cattle-system --install rancher --set hostname=rancher.my.org /scripts/helm/kube-opex-analytics/
+helm upgrade --namespace cattle-system --install rancher --set hostname=rancher.my.org ../helm/rancher/
 # helm install rancher rancher-latest/rancher \
 #   --namespace cattle-system \
 #   --set hostname=rancher.my.org

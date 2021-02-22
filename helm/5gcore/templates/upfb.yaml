@@ -29,8 +29,6 @@ spec:
         env:
             {{- toYaml .Values.upfb.env | nindent 8 }}
           {{- end }}
-        ports:
-        - containerPort: {{  .Values.upfb.containerPort }}
         command:  {{  .Values.upfb.command }}
         args: {{  .Values.upfb.args }}
         volumeMounts:

@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: {{ .Values.namespace }}
+  name: {{ .Values.smf.name }}
+  labels:
+    app: {{  .Values.smf.app }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+        app: {{  .Values.smf.app }}
+  template:
+    metadata:
+      labels:
+        app: {{  .Values.smf.app }}
+    spec:
+      {{- if .Values.smf.initContainers }}
+      initContainers:
+        {{- toYaml .Values.smf.initContainers | nindent 8 }}
+      {{- end }}
+      containers:
+      - name: {{  .Values.smf.app }}
+        securityContext:
+            {{- toYaml .Values.smf.securityContext | nindent 10 }}
+        image: "{{ .Values.image.repository }}:{{ .Values.smf.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.smf.env }}
+        env:
+            {{- toYaml .Values.smf.env | nindent 8 }}
+          {{- end }}
+        ports:
+        - containerPort: {{  .Values.smf.containerPort }}
+        command:  {{  .Values.smf.command }}
+        args: {{  .Values.smf.args }}
+        volumeMounts:
+          {{- toYaml .Values.smf.volumeMounts | nindent 8 }}
+      volumes:
+            {{- toYaml .Values.smf.volumes | nindent 6 }}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.smf.service.name }}
+  namespace: {{ .Values.namespace}}
+spec:
+  {{- if eq .Values.smf.service.type "ClusterIP" }}
+  clusterIP: {{ .Values.smf.service.clusterIP }}
+  {{- end }}
+  type: {{ .Values.smf.service.type }}
+  ports:
+    - port: {{ .Values.smf.service.port }}
+      targetPort: {{ .Values.smf.service.targetPort }}
+      protocol: TCP
+  selector:
+    app: {{  .Values.smf.app }}

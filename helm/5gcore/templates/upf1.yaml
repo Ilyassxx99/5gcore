@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: {{ .Values.namespace }}
+  name: {{ .Values.upf1.name }}
+  labels:
+    app: {{  .Values.upf1.app }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+        app: {{  .Values.upf1.app }}
+  template:
+    metadata:
+      labels:
+        app: {{  .Values.upf1.app }}
+    spec:
+      {{- if .Values.upf1.initContainers }}
+      initContainers:
+        {{- toYaml .Values.upf1.initContainers | nindent 8 }}
+      {{- end }}
+      containers:
+      - name: {{  .Values.upf1.app }}
+        securityContext:
+            {{- toYaml .Values.upf1.securityContext | nindent 10 }}
+        image: "{{ .Values.image.repository }}:{{ .Values.upf1.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.upf1.env }}
+        env:
+            {{- toYaml .Values.upf1.env | nindent 8 }}
+          {{- end }}
+        ports:
+        - containerPort: {{  .Values.upf1.containerPort }}
+        command:  {{  .Values.upf1.command }}
+        args: {{  .Values.upf1.args }}
+        volumeMounts:
+          {{- toYaml .Values.upf1.volumeMounts | nindent 8 }}
+      volumes:
+            {{- toYaml .Values.upf1.volumes | nindent 6 }}

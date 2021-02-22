@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: {{ .Values.namespace }}
+  name: {{ .Values.amf.name }}
+  labels:
+    app: {{  .Values.amf.app }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+        app: {{  .Values.amf.app }}
+  template:
+    metadata:
+      labels:
+        app: {{  .Values.amf.app }}
+    spec:
+      {{- if .Values.amf.initContainers }}
+      initContainers:
+        {{- toYaml .Values.amf.initContainers | nindent 8 }}
+      {{- end }}
+      containers:
+      - name: {{  .Values.amf.app }}
+        securityContext:
+            {{- toYaml .Values.amf.securityContext | nindent 10 }}
+        image: "{{ .Values.image.repository }}:{{ .Values.amf.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.amf.env }}
+        env:
+            {{- toYaml .Values.amf.env | nindent 8 }}
+          {{- end }}
+        ports:
+        - containerPort: {{  .Values.amf.containerPort }}
+        command:  {{  .Values.amf.command }}
+        args: {{  .Values.amf.args }}
+        volumeMounts:
+          {{- toYaml .Values.amf.volumeMounts | nindent 8 }}
+      volumes:
+            {{- toYaml .Values.amf.volumes | nindent 6 }}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.amf.service.name }}
+  namespace: {{ .Values.namespace}}
+spec:
+  {{- if eq .Values.amf.service.type "ClusterIP" }}
+  clusterIP: {{ .Values.amf.service.clusterIP }}
+  {{- end }}
+  type: {{ .Values.amf.service.type }}
+  ports:
+    - port: {{ .Values.amf.service.port }}
+      targetPort: {{ .Values.amf.service.targetPort }}
+      protocol: TCP
+  selector:
+    app: {{  .Values.amf.app }}

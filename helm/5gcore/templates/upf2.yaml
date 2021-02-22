@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: {{ .Values.namespace }}
+  name: {{ .Values.upf2.name }}
+  labels:
+    app: {{  .Values.upf2.app }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+        app: {{  .Values.upf2.app }}
+  template:
+    metadata:
+      labels:
+        app: {{  .Values.upf2.app }}
+    spec:
+      {{- if .Values.upf2.initContainers }}
+      initContainers:
+        {{- toYaml .Values.upf2.initContainers | nindent 8 }}
+      {{- end }}
+      containers:
+      - name: {{  .Values.upf2.app }}
+        securityContext:
+            {{- toYaml .Values.upf2.securityContext | nindent 10 }}
+        image: "{{ .Values.image.repository }}:{{ .Values.upf2.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.upf2.env }}
+        env:
+            {{- toYaml .Values.upf2.env | nindent 8 }}
+          {{- end }}
+        ports:
+        - containerPort: {{  .Values.upf2.containerPort }}
+        command:  {{  .Values.upf2.command }}
+        args: {{  .Values.upf2.args }}
+        volumeMounts:
+          {{- toYaml .Values.upf2.volumeMounts | nindent 8 }}
+      volumes:
+            {{- toYaml .Values.upf2.volumes | nindent 6 }}

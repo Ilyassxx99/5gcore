@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: {{ .Values.namespace }}
+  name: {{ .Values.upfb.name }}
+  labels:
+    app: {{  .Values.upfb.app }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+        app: {{  .Values.upfb.app }}
+  template:
+    metadata:
+      labels:
+        app: {{  .Values.upfb.app }}
+    spec:
+      {{- if .Values.upfb.initContainers }}
+      initContainers:
+        {{- toYaml .Values.upfb.initContainers | nindent 8 }}
+      {{- end }}
+      containers:
+      - name: {{  .Values.upfb.app }}
+        securityContext:
+            {{- toYaml .Values.upfb.securityContext | nindent 10 }}
+        image: "{{ .Values.image.repository }}:{{ .Values.upfb.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.upfb.env }}
+        env:
+            {{- toYaml .Values.upfb.env | nindent 8 }}
+          {{- end }}
+        ports:
+        - containerPort: {{  .Values.upfb.containerPort }}
+        command:  {{  .Values.upfb.command }}
+        args: {{  .Values.upfb.args }}
+        volumeMounts:
+          {{- toYaml .Values.upfb.volumeMounts | nindent 8 }}
+      volumes:
+            {{- toYaml .Values.upfb.volumes | nindent 6 }}

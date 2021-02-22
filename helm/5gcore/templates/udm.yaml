@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: {{ .Values.namespace }}
+  name: {{ .Values.udm.name }}
+  labels:
+    app: {{  .Values.udm.app }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+        app: {{  .Values.udm.app }}
+  template:
+    metadata:
+      labels:
+        app: {{  .Values.udm.app }}
+    spec:
+      {{- if .Values.udm.initContainers }}
+      initContainers:
+        {{- toYaml .Values.udm.initContainers | nindent 8 }}
+      {{- end }}
+      containers:
+      - name: {{  .Values.udm.app }}
+        securityContext:
+            {{- toYaml .Values.udm.securityContext | nindent 10 }}
+        image: "{{ .Values.image.repository }}:{{ .Values.udm.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.udm.env }}
+        env:
+            {{- toYaml .Values.udm.env | nindent 8 }}
+          {{- end }}
+        ports:
+        - containerPort: {{  .Values.udm.containerPort }}
+        command:  {{  .Values.udm.command }}
+        args: {{  .Values.udm.args }}
+        volumeMounts:
+          {{- toYaml .Values.udm.volumeMounts | nindent 8 }}
+      volumes:
+            {{- toYaml .Values.udm.volumes | nindent 6 }}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.udm.service.name }}
+  namespace: {{ .Values.namespace}}
+spec:
+  {{- if eq .Values.udm.service.type "ClusterIP" }}
+  clusterIP: {{ .Values.udm.service.clusterIP }}
+  {{- end }}
+  type: {{ .Values.udm.service.type }}
+  ports:
+    - port: {{ .Values.udm.service.port }}
+      targetPort: {{ .Values.udm.service.targetPort }}
+      protocol: TCP
+  selector:
+    app: {{  .Values.udm.app }}

@@ -20,16 +20,20 @@ spec:
         {{- toYaml .Values.nrf.initContainers | nindent 8 }}
       {{- end }}
       containers:
-        - name: {{  .Values.nrf.app }}
-          securityContext:
-            {{- toYaml .Values.nrf.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.nrf.app }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+      - name: {{  .Values.nrf.app }}
+        securityContext:
+            {{- toYaml .Values.nrf.securityContext | nindent 10 }}
+        image: "{{ .Values.image.repository }}:{{ .Values.nrf.app }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
           {{- if .Values.nrf.env }}
-          env:
-            {{- toYaml .Values.nrf.env | nindent 12 }}
+        env:
+            {{- toYaml .Values.nrf.env | nindent 8 }}
           {{- end }}
-          ports:
-          - containerPort: {{  .Values.nrf.containerPort }}
+        ports:
+        - containerPort: {{  .Values.nrf.containerPort }}
+        command:  {{  .Values.nrf.command }}
+        args: {{  .Values.nrf.args }}
+        volumeMounts:
+          {{- toYaml .Values.nrf.volumeMounts | nindent 8 }}
       volumes:
-            {{- toYaml .Values.nrf.volumes | nindent 8 }}
+            {{- toYaml .Values.nrf.volumes | nindent 6 }}

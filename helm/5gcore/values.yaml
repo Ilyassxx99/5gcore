@@ -12,32 +12,89 @@ image:
 
 nrf:
   name: nrf-deployment
+
+  command: ["./nrf"]
+
+  args: ["-nrfcfg", "../config/nrfcfg.conf"]
+
+  volumeMounts:
+  - mountPath: /free5gc/config/nrfcfg.conf
+    name: nrfcfg-volume
+  - mountPath: /free5gc/config/free5GC.conf
+    name: nrf5gc-volume
+    
   service:
     type: ClusterIP
     port: 29510
     name: nrf-service
     clusterIP: 10.244.100.12
     targetPort: 29510
+
   app: nrf
+
   initContainers:
   - name: init-mongo-service
     image: busybox:1.28
     command: ['sh', '-c', "until nslookup mongo-service.5gcore.svc.cluster.local; do echo waiting for mongo; sleep 2; done"]
+
   securityContext:
     capabilities:
       add: ["NET_ADMIN","NET_RAW"]
+
   env:
   - name: DB_URI
     value: mongodb://db/free5gc
   - name: GIN_MODE
     value: release
+
   containerPort: 29510
+
   volumes:
   - name: nrfcfg-volume
     hostPath:
       # chemin du dossier sur l'hôte
       path: /home/ilyass/5gcore/config/nrfcfg.conf
   - name: nrf5gc-volume
+    hostPath:
+      # chemin du dossier sur l'hôte
+      path: /home/ilyass/5gcore/config/free5GC.conf
+
+
+amf:
+  name: amf-deployment
+
+  service:
+    type: ClusterIP
+    port: 29518
+    name: amf-service
+    clusterIP: 10.244.100.18
+    targetPort: 29518
+
+  app: amf
+
+  initContainers:
+  - name: init-nrf-service
+    image: curlimages/curl:latest
+    command: ['sh', '-c', "until curl http://nrf-service.5gcore.svc.cluster.local:29510; do echo waiting for NRF; sleep 2; done"]
+
+  securityContext:
+    capabilities:
+      add: ["NET_ADMIN","NET_RAW"]
+
+  env:
+  - name: DB_URI
+    value: mongodb://db/free5gc
+  - name: GIN_MODE
+    value: release
+
+  containerPort: 29510
+
+  volumes:
+  - name: amfcfg-volume
+    hostPath:
+      # chemin du dossier sur l'hôte
+      path: /home/ilyass/5gcore/config/amfcfg.conf
+  - name: amf5gc-volume
     hostPath:
       # chemin du dossier sur l'hôte
       path: /home/ilyass/5gcore/config/free5GC.conf

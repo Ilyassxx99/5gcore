@@ -4,76 +4,40 @@
 
 replicaCount: 1
 
+namespace: 5gcore
+
 image:
-  repository: nginx
+  repository: ilyassifez/5gcore
   pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
 
-imagePullSecrets: []
-nameOverride: ""
-fullnameOverride: ""
-
-serviceAccount:
-  # Specifies whether a service account should be created
-  create: true
-  # Annotations to add to the service account
-  annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
-  name: ""
-
-podAnnotations: {}
-
-podSecurityContext: {}
-  # fsGroup: 2000
-
-securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
-
-service:
-  type: ClusterIP
-  port: 80
-
-ingress:
-  enabled: false
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-  hosts:
-    - host: chart-example.local
-      paths: []
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
-
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
-
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
-
-nodeSelector: {}
-
-tolerations: []
-
-affinity: {}
+nrf:
+  name: nrf-deployment
+  service:
+    type: ClusterIP
+    port: 29510
+    name: nrf-service
+    clusterIP: 10.244.100.12
+    targetPort: 29510
+  app: nrf
+  initContainers:
+  - name: init-mongo-service
+    image: busybox:1.28
+    command: ['sh', '-c', "until nslookup mongo-service.5gcore.svc.cluster.local; do echo waiting for mongo; sleep 2; done"]
+  securityContext:
+    capabilities:
+      add: ["NET_ADMIN","NET_RAW"]
+  env:
+  - name: DB_URI
+    value: mongodb://db/free5gc
+  - name: GIN_MODE
+    value: release
+  containerPort: 29510
+  volumes:
+  - name: nrfcfg-volume
+    hostPath:
+      # chemin du dossier sur l'hôte
+      path: /home/ilyass/5gcore/config/nrfcfg.conf
+  - name: nrf5gc-volume
+    hostPath:
+      # chemin du dossier sur l'hôte
+      path: /home/ilyass/5gcore/config/free5GC.conf

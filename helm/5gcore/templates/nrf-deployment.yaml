@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: {{ .Values.namespace }}
+  name: {{ .Values.nrf.name }}
+  labels:
+    app: {{  .Values.nrf.app }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+        app: {{  .Values.nrf.app }}
+  template:
+    metadata:
+      labels:
+        app: {{  .Values.nrf.app }}
+    spec:
+      {{- if .Values.nrf.initContainers }}
+      initContainers:
+        {{- toYaml .Values.nrf.initContainers | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{  .Values.nrf.app }}
+          securityContext:
+            {{- toYaml .Values.nrf.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.nrf.app }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.nrf.env }}
+          env:
+            {{- toYaml .Values.nrf.env | nindent 12 }}
+          {{- end }}
+          ports:
+          - containerPort: {{  .Values.nrf.containerPort }}
+      volumes:
+            {{- toYaml .Values.nrf.volumes | nindent 8 }}

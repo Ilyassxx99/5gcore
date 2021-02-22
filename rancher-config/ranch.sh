@@ -13,7 +13,7 @@ helm install \
   --namespace cert-manager \
   --version v1.0.4
 certpodname=$(kubectl get pods -n cert-manager -o jsonpath='{.items[2].metadata.name}')
-kubectl wait pod/$certpodname -n cert-manager --for=condition=Running
+kubectl wait pod/$certpodname -n cert-manager --for=condition=Running --timeout=-1
 kubectl get pods -n cert-manager
 helm upgrade --namespace cattle-system --install rancher --set hostname=rancher.my.org ../helm/rancher/ --set ingress.tls.source=letsEncrypt --set letsEncrypt.email=ifezouanii@gmail.com
 # helm install rancher rancher-latest/rancher \

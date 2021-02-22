@@ -1,8 +1,8 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "5gcore.fullname" . }}
-  namespace: {{ .Values.nrf.service.name }}
+  name: {{ .Values.nrf.service.name }}
+  namespace: {{ .Values.namespace}}
 spec:
   {{- if eq .Values.nrf.service.type "ClusterIP" }}
   clusterIP: {{ .Values.nrf.service.clusterIP }}

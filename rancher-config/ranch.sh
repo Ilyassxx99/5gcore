@@ -12,15 +12,13 @@ helm install \
   cert-manager jetstack/cert-manager \
   --namespace cert-manager \
   --version v1.0.4
-certpodname=$(kubectl get pods -n cert-manager -o jsonpath='{.items[1].metadata.name}')
-kubectl wait pod/$certpodname -n cert-manager --for=condition=Ready
+certpodname=$(kubectl get pods -n cert-manager -o jsonpath='{.items[2].metadata.name}')
+kubectl wait pod/$certpodname -n cert-manager --for=condition=Running
 kubectl get pods -n cert-manager
-helm upgrade --namespace cattle-system --install rancher --set hostname=rancher.my.org ../helm/rancher/
+helm upgrade --namespace cattle-system --install rancher --set hostname=rancher.my.org ../helm/rancher/ --set ingress.tls.source=letsEncrypt --set letsEncrypt.email=ifezouanii@gmail.com
 # helm install rancher rancher-latest/rancher \
 #   --namespace cattle-system \
 #   --set hostname=rancher.my.org
-ranchpodname=$(kubectl get pods -n cattle-system -o jsonpath='{.items[1].metadata.name}')
-kubectl wait pod/$ranchpodname -n cattle-system --for=condition=Ready
 kubectl get pods -n cert-manager
 kubectl get pods -n cattle-system
 kubectl get svc -n cattle-system

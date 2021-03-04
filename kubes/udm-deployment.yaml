@@ -54,7 +54,7 @@ metadata:
   namespace: 5gcore
   name: udm-service
 spec:
-  clusterIP: 10.244.100.3
+  # clusterIP: 10.244.100.3
   selector:
     app: udm
   ports:

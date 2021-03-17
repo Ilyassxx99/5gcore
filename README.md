@@ -75,7 +75,7 @@ sudo apt-get install \
 
 ### Kubernetes
 
-You also need to Setup Kubernetes as detailed here: 
+You also need to Setup Kubernetes with Kubeadm as detailed here: 
 ```bash
 sudo apt-get update && sudo apt-get install -y apt-transport-https curl
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
@@ -94,6 +94,28 @@ sudo hostnamectl set-hostname master-node && \
              sudo cp -i /etc/kubernetes/admin.conf ~/.kube/config && \
              sudo chown $(id -u):$(id -g) ~/.kube/config && \
              sudo kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+```
+
+### RKE
+
+To Setup Kubernetes with RKE (This creates two clusters, mycluster1 and mycluster2): 
+```bash
+cd rancher-config
+chmod +x rke.sh
+./rke.sh
+```
+To control cluster 1 :
+```bash
+kubectl config use-context mycluster1
+```
+To control cluster 2 :
+```bash
+kubectl config use-context mycluster2
+```
+To deploy Rancher in one of the two clusters :
+```bash
+chmod +x ranch.sh
+./ranch.sh
 ```
 
 ### Helm
